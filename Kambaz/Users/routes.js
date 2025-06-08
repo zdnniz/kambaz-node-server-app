@@ -101,4 +101,3 @@ export default function UserRoutes(app) {
 
     app.post("/api/users/profile", profile);
 }
-
