@@ -15,41 +15,25 @@ app.use(cors({
     credentials: true,
     origin: process.env.NETLIFY_URL || "http://localhost:5173",
 }));
-/*
-const sessionOptions = {
-    secret: process.env.SESSION_SECRET || "kambaz",
-    resave: false,
-    saveUninitialized: false,
-};
-
-if (process.env.NODE_ENV !== "development") {
-    sessionOptions.proxy = true;
-    sessionOptions.cookie = {
-        sameSite: "none",
-        secure: true,
-        domain: process.env.NODE_SERVER_DOMAIN,
-    };
-}*/
-const isDev = process.env.NODE_ENV !== "production";
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    sameSite: isDev ? "lax" : "none",
-    secure: !isDev, 
-  }
 };
 
-if (!isDev) {
+if (process.env.NODE_ENV !== "development") {
   sessionOptions.proxy = true;
-  sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+    domain: process.env.NODE_SERVER_DOMAIN,
+  };
 }
 
+app.use(session(sessionOptions));
 
 app.use(express.json());
-app.use(session(sessionOptions));
 
 UserRoutes(app);
 CourseRoutes(app);
