@@ -16,7 +16,7 @@ app.use(cors({
     origin: process.env.NETLIFY_URL || "http://localhost:5173",
 }));
 
-/*
+
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
@@ -35,8 +35,8 @@ if (process.env.NODE_ENV !== "development") {
     domain: process.env.NODE_SERVER_DOMAIN,
   };
 }
-*/
 
+/*
 const isDev = process.env.NODE_ENV === "development";
 
 const sessionOptions = {
@@ -52,7 +52,8 @@ const sessionOptions = {
 if (!isDev) {
   sessionOptions.proxy = true;
   sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
-}
+}*/
+
 app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 
