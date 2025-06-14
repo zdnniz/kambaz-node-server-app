@@ -24,13 +24,6 @@ export async function findUsersForCourse(courseId) {
   return enrollments.map((enrollment) => enrollment.user);
 }
 export function enrollUserInCourse(user, course) {
-  return model.create({ user, course, _id: `${user}-${course}` });
-}
-export function unenrollUserFromCourse(user, course) {
-  return model.deleteOne({ user, course });
-}
-
-export function enrollUserInCourse(user, course) {
   const newEnrollment = { user, course, _id: `${user}-${course}` };
   return model.create(newEnrollment);
  }
