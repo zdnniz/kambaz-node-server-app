@@ -11,7 +11,8 @@ export async function findUsersForCourse(courseId) {
   return enrollments.map((enrollment) => enrollment.user);
 }
 export function enrollUserInCourse(user, course) {
-  const newEnrollment = { user, course, _id: `${user}-${course}` };
+  //const newEnrollment = { user, course, _id: `${user}-${course}` };
+  const newEnrollment = { user, course, _id: uuidv4() };
   return model.create(newEnrollment);
  }
  export function unenrollUserFromCourse(user, course) {

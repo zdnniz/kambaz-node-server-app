@@ -17,11 +17,32 @@ const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING ||
 mongoose.connect(CONNECTION_STRING);
 
 const app = express();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://jovial-cupcake-25892c.netlify.app"
+];
+
 app.use(cors({
-    credentials: true,
-    origin: process.env.NETLIFY_URL || "http://localhost:5173",
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
 }));
 
+/*
+app.use(cors({
+    credentials: true,
+    //origin: process.env.NETLIFY_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      callback(null, true);
+    }
+}));
+*/
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
